@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengaturan - Kabinet Rahman 25</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar glass">
+    <div class="brand">
+      <img
+        src="logo-rahman25.png"
+        alt="Logo Kabinet Rahman 25"
+        class="brand-logo"
+        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><rect width=%22120%22 height=%22120%22 fill=%22%230b1624%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%237af7c1%22 font-family=%22Segoe UI%22 font-size=%2248%22 font-weight=%22700%22 text-anchor=%22middle%22>R</text></svg>';"
+      />
+      <div class="brand-text">
+        <h2>Rahman 25</h2>
+        <span>HMJ Ilmu Komputer ULM</span>
+      </div>
+    </div>
+    <p class="tagline">Preferensi tampilan Kabinet Rahman 25</p>
+    <nav class="nav">
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="anggota.html">Anggota</a>
+      <a class="nav-link" href="divisi.html">Divisi</a>
+      <a class="nav-link active" href="pengaturan.html">Pengaturan</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <p class="eyebrow">Tampilan</p>
+        <h1>Pengaturan UI</h1>
+        <p class="muted">Navigasi utama tetap di sidebar untuk akses cepat.</p>
+      </div>
+      <div class="header-actions">
+        <a class="ghost" href="index.html">Kembali ke Dashboard</a>
+      </div>
+    </header>
+
+    <section class="card glass" style="margin-top:18px;">
+      <h3 style="margin:0 0 10px;">Pengaturan Data</h3>
+      <p class="muted" style="margin:0 0 10px;">Kelola preferensi dan reset data lokal.</p>
+      <div class="card-actions" style="flex-wrap: wrap;">
+        <button onclick="setPreferred('card')">Setel preferensi: Mode Kartu</button>
+        <button onclick="setPreferred('table')">Setel preferensi: Mode Tabel</button>
+        <button class="ghost" onclick="resetData()">Reset Data ke Default</button>
+      </div>
+      <p class="muted" id="prefStatus" style="margin:12px 0 0;"></p>
+    </section>
+  </main>
+</div>
+
+<script>
+  function setPreferred(mode) {
+    localStorage.setItem("preferredViewMode", mode);
+    document.getElementById("prefStatus").innerText = `Preferensi disimpan: ${mode}`;
+  }
+  function resetData() {
+    if (!confirm("Reset semua data anggota ke default?")) return;
+    localStorage.removeItem("anggotaData");
+    document.getElementById("prefStatus").innerText = "Data direset. Buka dashboard untuk memuat ulang.";
+  }
+  enforceAuth();
+</script>
+
+</body>
+</html>
+

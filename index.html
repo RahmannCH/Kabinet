@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kabinet Rahman 25 - Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar glass">
+    <div class="brand">
+      <img
+        src="logo-rahman25.png"
+        alt="Logo Kabinet Rahman 25"
+        class="brand-logo"
+        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><rect width=%22120%22 height=%22120%22 fill=%22%230b1624%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%237af7c1%22 font-family=%22Segoe UI%22 font-size=%2248%22 font-weight=%22700%22 text-anchor=%22middle%22>R</text></svg>';"
+      />
+      <div class="brand-text">
+        <h2>Rahman 25</h2>
+        <span>HMJ Ilmu Komputer ULM</span>
+      </div>
+    </div>
+    <p class="tagline">Dashboard interaktif Kabinet Rahman 25</p>
+    <nav class="nav">
+      <a class="nav-link active" href="index.html">Dashboard</a>
+      <a class="nav-link" href="anggota.html">Anggota</a>
+      <a class="nav-link" href="divisi.html">Divisi</a>
+      <a class="nav-link" href="pengaturan.html">Pengaturan</a>
+    </nav>
+
+    <div class="division-list">
+      <h4>Divisi</h4>
+      <div id="divisionChips" class="chips"></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <p class="eyebrow">Himpunan Mahasiswa Informatika</p>
+        <h1>Dashboard Organisasi</h1>
+        <p class="muted">Pantau anggota, foto, dan divisi secara interaktif.</p>
+      </div>
+      <div class="header-actions">
+        <div class="auth-status" id="authStatus"></div>
+        <a class="ghost" href="login.html">Login</a>
+        <a class="ghost" href="register.html">Registrasi</a>
+        <button class="ghost" onclick="toggleView()">Toggle Tabel/Kartu</button>
+        <button id="addBtn" onclick="openModal()">+ Tambah Anggota</button>
+      </div>
+    </header>
+
+    <section class="leaders glass" id="leadersSection">
+      <div class="leaders-head">
+        <div>
+          <p class="eyebrow">Pimpinan</p>
+          <h3>Kabinet Rahman 25</h3>
+        </div>
+      </div>
+      <div class="leader-grid" id="leaderGrid"></div>
+    </section>
+
+    <section class="stats">
+      <div class="card glass">
+        <div class="stat-label">Total Anggota</div>
+        <div class="stat-value" id="totalAnggota">0</div>
+      </div>
+      <div class="card glass">
+        <div class="stat-label">Divisi Aktif</div>
+        <div class="stat-value" id="totalDivisi">0</div>
+      </div>
+      <div class="card glass">
+        <div class="stat-label">Anggota Baru</div>
+        <div class="stat-value" id="newJoin">0</div>
+      </div>
+    </section>
+
+    <section class="controls glass">
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari nama, nim, atau divisi..."
+        />
+      </div>
+      <div class="control-group">
+        <label>Filter Divisi</label>
+        <select id="filterDivisi"></select>
+      </div>
+      <div class="control-group">
+        <label>Urutkan</label>
+        <select id="sortBy">
+          <option value="nama">Nama A-Z</option>
+          <option value="divisi">Divisi</option>
+          <option value="nim">NIM</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label>Mode</label>
+        <div class="pill-group">
+          <button class="pill active" id="modeCard" onclick="setMode('card')">Kartu</button>
+          <button class="pill" id="modeTable" onclick="setMode('table')">Tabel</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="carousel glass">
+      <div class="carousel-header">
+        <div>
+          <p class="eyebrow">Sorotan</p>
+          <h3>Highlight Anggota</h3>
+        </div>
+        <div class="carousel-nav">
+          <button class="icon-btn" onclick="moveCarousel(-1)">⟨</button>
+          <button class="icon-btn" onclick="moveCarousel(1)">⟩</button>
+        </div>
+      </div>
+      <div class="carousel-track" id="carouselTrack"></div>
+    </section>
+
+    <section class="cards-section" id="cardsSection">
+      <div id="cardGrid" class="card-grid"></div>
+    </section>
+
+    <section class="table-section glass" id="tableSection">
+      <table>
+        <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Nama</th>
+            <th>NIM</th>
+            <th>Divisi</th>
+            <th>Peran</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="anggotaTable"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content glass">
+    <div class="modal-header">
+      <h2 id="modalTitle">Tambah Anggota</h2>
+      <button class="icon-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input id="nama" placeholder="Nama" />
+      <input id="nim" placeholder="NIM" />
+      <input id="divisi" placeholder="Divisi (contoh: Humas)" list="divisiList" />
+      <input id="peran" placeholder="Peran (contoh: Ketua Divisi)" />
+      <input id="foto" placeholder="URL Foto (opsional)" />
+    </div>
+    <div class="modal-footer">
+      <button onclick="saveAnggota()">Simpan</button>
+      <button class="secondary" onclick="closeModal()">Batal</button>
+    </div>
+    <datalist id="divisiList"></datalist>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  enforceAuth();
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anggota - Kabinet Rahman 25</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar glass">
+    <div class="brand">
+      <img
+        src="logo-rahman25.png"
+        alt="Logo Kabinet Rahman 25"
+        class="brand-logo"
+        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><rect width=%22120%22 height=%22120%22 fill=%22%230b1624%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%237af7c1%22 font-family=%22Segoe UI%22 font-size=%2248%22 font-weight=%22700%22 text-anchor=%22middle%22>R</text></svg>';"
+      />
+      <div class="brand-text">
+        <h2>Rahman 25</h2>
+        <span>HMJ Ilmu Komputer ULM</span>
+      </div>
+    </div>
+    <p class="tagline">Kelola data anggota Kabinet Rahman 25</p>
+    <nav class="nav">
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link active" href="anggota.html">Anggota</a>
+      <a class="nav-link" href="divisi.html">Divisi</a>
+      <a class="nav-link" href="pengaturan.html">Pengaturan</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <p class="eyebrow">Data Inti</p>
+        <h1>Manajemen Anggota</h1>
+        <p class="muted">Gunakan dashboard utama untuk tambah/edit/hapus anggota.</p>
+      </div>
+      <div class="header-actions">
+        <a class="ghost" href="index.html">Kembali ke Dashboard</a>
+        <a href="index.html#modal">+ Tambah Anggota</a>
+      </div>
+    </header>
+
+    <section class="leaders glass" id="leadersAnggota">
+      <div class="leaders-head">
+        <div>
+          <p class="eyebrow">Pimpinan</p>
+          <h3>Ketua & Wakil Ketua Umum</h3>
+        </div>
+      </div>
+      <div class="leader-grid" id="leaderGridAnggota"></div>
+    </section>
+
+    <section class="glass card" style="margin-top:18px;">
+      <h3 style="margin:0 0 8px;">Daftar Anggota</h3>
+      <div id="anggotaList" class="card-grid"></div>
+      <p class="muted" style="margin:10px 0 0;">Tambah/edit/hapus bisa langsung di dashboard.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+  const seedAnggota = [
+    { nama: "Muhammad Nur Rahman", nim: "21415000", divisi: "BPH", peran: "Ketua Umum", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Siti Aulia", nim: "21415016", divisi: "BPH", peran: "Wakil Ketua Umum", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Alya Pratiwi", nim: "21415001", divisi: "Humas", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Rizal Nugraha", nim: "21415007", divisi: "Humas", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Bagas Dirgantara", nim: "21415002", divisi: "PSDM", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Nina Ramadhani", nim: "21415008", divisi: "PSDM", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Citra Lestari", nim: "21415003", divisi: "Media", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Yoga Satria", nim: "21415009", divisi: "Media", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Davin Surya", nim: "21415004", divisi: "Riset", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Yuliana Dewi", nim: "21415010", divisi: "Riset", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Eka Wibowo", nim: "21415005", divisi: "Acara", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Rara Ayuning", nim: "21415011", divisi: "Acara", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Farah Rahma", nim: "21415006", divisi: "Kewirausahaan", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Andra Putra", nim: "21415012", divisi: "Kewirausahaan", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Laras Puspita", nim: "21415013", divisi: "Media", peran: "Konten Kreator", foto: "" },
+    { nama: "Bima Santoso", nim: "21415014", divisi: "Humas", peran: "Anggota", foto: "" },
+    { nama: "Yusuf Maulana", nim: "21415015", divisi: "Riset", peran: "Data Analyst", foto: "" },
+  ];
+
+  function getAnggotaData() {
+    const stored = localStorage.getItem("anggotaData");
+    if (stored) return JSON.parse(stored);
+    return seedAnggota;
+  }
+
+  function renderAnggotaList() {
+    const data = getAnggotaData();
+    const container = document.getElementById("anggotaList");
+    container.innerHTML = "";
+    const leadersContainer = document.getElementById("leaderGridAnggota");
+    if (leadersContainer) leadersContainer.innerHTML = "";
+    data.forEach(a => {
+      const card = document.createElement("div");
+      const isLeader = (a.peran || "").toLowerCase().includes("ketua umum") || (a.peran || "").toLowerCase().includes("wakil ketua umum");
+      card.className = "anggota-card glass" + (isLeader ? " leader-card" : "");
+      card.innerHTML = `
+        <div class="card-hero" style="background-image:url('${a.foto || "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60"}')"></div>
+        <div class="card-body">
+          <div class="card-top">
+            <div>
+              <h4>${a.nama}</h4>
+              <p class="muted">${a.peran || "Anggota"}</p>
+            </div>
+            <span class="badge">${a.divisi}</span>
+          </div>
+          <p class="muted">NIM: ${a.nim}</p>
+          ${isLeader ? `<div class="leader-tag">${a.peran}</div>` : ""}
+        </div>
+      `;
+      container.appendChild(card);
+      if (isLeader && leadersContainer) {
+        const lc = document.createElement("div");
+        lc.className = "leader-card glass";
+        lc.innerHTML = `
+          <div class="leader-hero" style="background-image:url('${a.foto || "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60"}')"></div>
+          <div class="leader-body">
+            <div class="leader-role">${a.peran}</div>
+            <h4>${a.nama}</h4>
+            <p class="muted">${a.divisi} · NIM ${a.nim}</p>
+          </div>
+        `;
+        leadersContainer.appendChild(lc);
+      }
+    });
+  }
+
+  renderAnggotaList();
+  enforceAuth();
+</script>
+
+</body>
+</html>
+

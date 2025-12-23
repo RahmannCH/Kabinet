@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Divisi - Kabinet Rahman 25</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="auth.js"></script>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar glass">
+    <div class="brand">
+      <img
+        src="logo-rahman25.png"
+        alt="Logo Kabinet Rahman 25"
+        class="brand-logo"
+        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22><rect width=%22120%22 height=%22120%22 fill=%22%230b1624%22/><text x=%2250%25%22 y=%2255%25%22 fill=%22%237af7c1%22 font-family=%22Segoe UI%22 font-size=%2248%22 font-weight=%22700%22 text-anchor=%22middle%22>R</text></svg>';"
+      />
+      <div class="brand-text">
+        <h2>Rahman 25</h2>
+        <span>HMJ Ilmu Komputer ULM</span>
+      </div>
+    </div>
+    <p class="tagline">Lihat struktur divisi Kabinet Rahman 25</p>
+    <nav class="nav">
+      <a class="nav-link" href="index.html">Dashboard</a>
+      <a class="nav-link" href="anggota.html">Anggota</a>
+      <a class="nav-link active" href="divisi.html">Divisi</a>
+      <a class="nav-link" href="pengaturan.html">Pengaturan</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="header">
+      <div>
+        <p class="eyebrow">Struktur</p>
+        <h1>Divisi HMIK</h1>
+        <p class="muted">Statistik lengkap bisa dilihat di dashboard utama.</p>
+      </div>
+      <div class="header-actions">
+        <a class="ghost" href="index.html">Kembali ke Dashboard</a>
+      </div>
+    </header>
+
+    <section class="card glass" style="margin-top:18px;">
+      <h3 style="margin:0 0 8px;">Daftar Divisi</h3>
+      <div id="divisiList" class="card-grid"></div>
+      <p class="muted" style="margin:10px 0 0;">Filter anggota per divisi tersedia di dashboard.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+  const seedAnggota = [
+    { nama: "Alya Pratiwi", nim: "21415001", divisi: "Humas", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Rizal Nugraha", nim: "21415007", divisi: "Humas", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Bagas Dirgantara", nim: "21415002", divisi: "PSDM", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Nina Ramadhani", nim: "21415008", divisi: "PSDM", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Citra Lestari", nim: "21415003", divisi: "Media", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Yoga Satria", nim: "21415009", divisi: "Media", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Davin Surya", nim: "21415004", divisi: "Riset", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Yuliana Dewi", nim: "21415010", divisi: "Riset", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Eka Wibowo", nim: "21415005", divisi: "Acara", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Rara Ayuning", nim: "21415011", divisi: "Acara", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Farah Rahma", nim: "21415006", divisi: "Kewirausahaan", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Andra Putra", nim: "21415012", divisi: "Kewirausahaan", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=60" },
+    { nama: "Laras Puspita", nim: "21415013", divisi: "Media", peran: "Konten Kreator", foto: "" },
+    { nama: "Bima Santoso", nim: "21415014", divisi: "Humas", peran: "Anggota", foto: "" },
+    { nama: "Yusuf Maulana", nim: "21415015", divisi: "Riset", peran: "Data Analyst", foto: "" },
+  ];
+
+  function getAnggotaData() {
+    const stored = localStorage.getItem("anggotaData");
+    if (stored) return JSON.parse(stored);
+    return seedAnggota;
+  }
+
+  function buildDivisiCards() {
+    const data = getAnggotaData();
+    const container = document.getElementById("divisiList");
+    container.innerHTML = "";
+    const divisiMap = {};
+
+    data.forEach(a => {
+      if (!divisiMap[a.divisi]) divisiMap[a.divisi] = { anggota: [], ketua: null, wakil: null };
+      divisiMap[a.divisi].anggota.push(a);
+      if (a.peran.toLowerCase().includes("ketua") && !divisiMap[a.divisi].ketua) divisiMap[a.divisi].ketua = a;
+      if (a.peran.toLowerCase().includes("wakil") && !divisiMap[a.divisi].wakil) divisiMap[a.divisi].wakil = a;
+    });
+
+    Object.entries(divisiMap).forEach(([divisi, info]) => {
+      const card = document.createElement("div");
+      card.className = "card glass";
+      const ketua = info.ketua ? info.ketua.nama : "-";
+      const wakil = info.wakil ? info.wakil.nama : "-";
+      card.innerHTML = `
+        <div class="card-top" style="margin-bottom:8px;">
+          <h3 style="margin:0;">${divisi}</h3>
+          <span class="badge">${info.anggota.length} anggota</span>
+        </div>
+        <p class="muted" style="margin:0 0 6px;">Ketua: ${ketua}</p>
+        <p class="muted" style="margin:0 0 6px;">Wakil: ${wakil}</p>
+        <div class="chips" style="margin-top:10px;">
+          ${info.anggota.slice(0,4).map(a => `<span class="chip">${a.nama}</span>`).join("")}
+          ${info.anggota.length > 4 ? `<span class="chip">+${info.anggota.length-4} lain</span>` : ""}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  buildDivisiCards();
+  enforceAuth();
+</script>
+
+</body>
+</html>
+
