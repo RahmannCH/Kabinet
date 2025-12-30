@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kabinet Rahman 25 - Dashboard</title>
+  <title>Dashboard HIMAKOM ULM - Kabinet Rahman 25</title>
   <link rel="stylesheet" href="style.css" />
   <script src="auth.js"></script>
 </head>
@@ -20,10 +20,15 @@
       />
       <div class="brand-text">
         <h2>Rahman 25</h2>
-        <span>HMJ Ilmu Komputer ULM</span>
+        <span>HIMAKOM ULM</span>
       </div>
     </div>
-    <p class="tagline">Dashboard interaktif Kabinet Rahman 25</p>
+    <div class="logo-row">
+      <img src="Logo Kabinet.jpg" alt="Logo Kabinet" class="logo-small main-logo" />
+      <img src="logo-himakom.jpg" alt="Logo HIMAKOM" class="logo-small" />
+      <img src="logo-ulm.png" alt="Logo ULM" class="logo-small" />
+    </div>
+    <p class="tagline">Dashboard Himpunan Mahasiswa Ilmu Komputer Universitas Lambung Mangkurat</p>
     <nav class="nav">
       <a class="nav-link active" href="index.html">Dashboard</a>
       <a class="nav-link" href="anggota.html">Anggota</a>
@@ -40,16 +45,15 @@
   <main class="main">
     <header class="header">
       <div>
-        <p class="eyebrow">Himpunan Mahasiswa Informatika</p>
-        <h1>Dashboard Organisasi</h1>
-        <p class="muted">Pantau anggota, foto, dan divisi secara interaktif.</p>
+        <p class="eyebrow">Himpunan Mahasiswa Ilmu Komputer</p>
+        <h1>Dashboard HIMAKOM ULM</h1>
+        <p class="muted">Pantau anggota, foto, dan divisi Kabinet Rahman 25 secara interaktif.</p>
       </div>
       <div class="header-actions">
         <div class="auth-status" id="authStatus"></div>
-        <a class="ghost" href="login.html">Login</a>
-        <a class="ghost" href="register.html">Registrasi</a>
         <button class="ghost" onclick="toggleView()">Toggle Tabel/Kartu</button>
         <button id="addBtn" onclick="openModal()">+ Tambah Anggota</button>
+        <button class="ghost danger" onclick="logout()" id="logoutBtn">Logout</button>
       </div>
     </header>
 
@@ -164,9 +168,16 @@
   </div>
 </div>
 
-<script src="app.js"></script>
+  <script src="app.js"></script>
 <script>
   enforceAuth();
+  // Make logout available globally
+  if (typeof logout !== 'function') {
+    window.logout = function() {
+      localStorage.removeItem("authUser");
+      window.location.href = "welcome.html";
+    };
+  }
 </script>
 </body>
 </html>

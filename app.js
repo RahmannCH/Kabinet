@@ -19,8 +19,8 @@ function loadData() {
     anggota = JSON.parse(stored);
   } else {
     anggota = [
-      { nama: "Muhammad Nur Rahman", nim: "21415000", divisi: "BPH", peran: "Ketua Umum", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
-      { nama: "Siti Aulia", nim: "21415016", divisi: "BPH", peran: "Wakil Ketua Umum", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
+      { nama: "Muhammad Nur Rahman", nim: "21415000", divisi: "", peran: "Ketua Umum", foto: "ProfileRahman.jpeg" },
+      { nama: "Siti Aulia", nim: "21415016", divisi: "", peran: "Wakil Ketua Umum", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
       { nama: "Alya Pratiwi", nim: "21415001", divisi: "Humas", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=60" },
       { nama: "Rizal Nugraha", nim: "21415007", divisi: "Humas", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
       { nama: "Bagas Dirgantara", nim: "21415002", divisi: "PSDM", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=60" },
@@ -112,11 +112,12 @@ function renderTable(data) {
     const isLeader = leadershipRoles.some(r => (a.peran || "").toLowerCase().includes(r));
     const row = document.createElement("tr");
     if (isLeader) row.classList.add("leader-row");
+    const fotoUrl = a.foto || placeholderFoto;
     row.innerHTML = `
-      <td><img class="avatar" src="${a.foto || placeholderFoto}" alt="${a.nama}" /></td>
+      <td><img class="avatar" src="${fotoUrl}" alt="${a.nama}" onerror="this.src='${placeholderFoto}'" /></td>
       <td>${a.nama}</td>
       <td>${a.nim}</td>
-      <td><span class="badge">${a.divisi}</span></td>
+      <td>${a.divisi ? `<span class="badge">${a.divisi}</span>` : "-"}</td>
       <td>${a.peran || "-"}</td>
       <td class="actions">
         ${currentUser && currentUser.role === "admin"
@@ -137,15 +138,16 @@ function renderCards(data) {
     const isLeader = leadershipRoles.some(r => (a.peran || "").toLowerCase().includes(r));
     const card = document.createElement("div");
     card.className = "anggota-card glass" + (isLeader ? " leader-card" : "");
+    const fotoUrl = a.foto || placeholderFoto;
     card.innerHTML = `
-      <div class="card-hero" style="background-image:url('${a.foto || placeholderFoto}')"></div>
+      <div class="card-hero" style="background-image:url('${fotoUrl}')"></div>
       <div class="card-body">
         <div class="card-top">
           <div>
             <h4>${a.nama}</h4>
             <p class="muted">${a.peran || "Anggota"}</p>
           </div>
-          <span class="badge">${a.divisi}</span>
+          ${a.divisi ? `<span class="badge">${a.divisi}</span>` : ""}
         </div>
         <p class="muted">NIM: ${a.nim}</p>
         ${isLeader ? `<div class="leader-tag">${a.peran}</div>` : ""}
@@ -157,6 +159,15 @@ function renderCards(data) {
           </div>
         </div>
       `;
+    // Add error handling for background images
+    const heroDiv = card.querySelector('.card-hero');
+    if (heroDiv && a.foto) {
+      const img = new Image();
+      img.onerror = () => {
+        heroDiv.style.backgroundImage = `url('${placeholderFoto}')`;
+      };
+      img.src = a.foto;
+    }
     grid.appendChild(card);
   });
 }
@@ -167,15 +178,25 @@ function renderCarousel(data) {
   data.slice(carouselIndex, carouselIndex + 3).forEach(a => {
     const item = document.createElement("div");
     item.className = "carousel-item";
+    const fotoUrl = a.foto || placeholderFoto;
     item.innerHTML = `
-      <div class="carousel-photo" style="background-image:url('${a.foto || placeholderFoto}')"></div>
+      <div class="carousel-photo" style="background-image:url('${fotoUrl}')"></div>
       <div class="carousel-info">
         <h4>${a.nama}</h4>
         <p>${a.peran || "Anggota"}</p>
-        <span class="badge">${a.divisi}</span>
+        ${a.divisi ? `<span class="badge">${a.divisi}</span>` : ""}
         <p class="muted">${a.nim}</p>
       </div>
     `;
+    // Add error handling for background images
+    const photoDiv = item.querySelector('.carousel-photo');
+    if (photoDiv && a.foto) {
+      const img = new Image();
+      img.onerror = () => {
+        photoDiv.style.backgroundImage = `url('${placeholderFoto}')`;
+      };
+      img.src = a.foto;
+    }
     track.appendChild(item);
   });
 }
@@ -304,14 +325,24 @@ function renderLeaders() {
   leaders.forEach(a => {
     const card = document.createElement("div");
     card.className = "leader-card glass";
+    const fotoUrl = a.foto || placeholderFoto;
     card.innerHTML = `
-      <div class="leader-hero" style="background-image:url('${a.foto || placeholderFoto}')"></div>
+      <div class="leader-hero" style="background-image:url('${fotoUrl}')" onerror="this.style.backgroundImage='url(${placeholderFoto})'"></div>
       <div class="leader-body">
         <div class="leader-role">${a.peran}</div>
         <h4>${a.nama}</h4>
-        <p class="muted">${a.divisi} · NIM ${a.nim}</p>
+        <p class="muted">${a.divisi ? `${a.divisi} · ` : ""}NIM ${a.nim}</p>
       </div>
     `;
+    // Add error handling for background images
+    const heroDiv = card.querySelector('.leader-hero');
+    if (heroDiv && a.foto) {
+      const img = new Image();
+      img.onerror = () => {
+        heroDiv.style.backgroundImage = `url('${placeholderFoto}')`;
+      };
+      img.src = a.foto;
+    }
     grid.appendChild(card);
   });
 }
@@ -330,7 +361,9 @@ function applyRoleUI() {
   const addBtn = document.getElementById("addBtn");
   if (addBtn) addBtn.disabled = !currentUser || currentUser.role !== "admin";
   const authStatus = document.getElementById("authStatus");
-  if (authStatus) authStatus.innerText = `Login: ${(currentUser && currentUser.name) || "Tamu"} (${(currentUser && currentUser.role) || "user"})`;
+  if (authStatus) authStatus.innerText = `${(currentUser && currentUser.name) || "Tamu"} (${(currentUser && currentUser.role) || "user"})`;
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) logoutBtn.style.display = currentUser ? "block" : "none";
 }
 
 function setupListeners() {
@@ -348,6 +381,12 @@ function setupListeners() {
     renderAll();
   });
 }
+
+// Make logout available globally
+window.logout = function() {
+  localStorage.removeItem("authUser");
+  window.location.href = "welcome.html";
+};
 
 currentUser = getCurrentUser();
 if (!currentUser) {

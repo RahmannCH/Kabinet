@@ -3,19 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Kabinet Rahman 25</title>
+  <title>Login - Dashboard HIMAKOM ULM</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="auth-body">
   <div class="auth-card glass">
-    <h2>Login Kabinet Rahman 25</h2>
+    <h2>Login Dashboard HIMAKOM ULM</h2>
     <p class="muted">Admin tetap: username <strong>rahman_25</strong>, password <strong>rahmanilkom</strong>.</p>
     <form id="loginForm">
-      <input id="loginIdentity" type="text" placeholder="Username atau Email" required />
-      <input id="loginPassword" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <div class="form-group">
+        <label for="loginIdentity">Username atau Email</label>
+        <input id="loginIdentity" type="text" placeholder="Username atau Email" required autocomplete="username" />
+        <span class="error-message" id="loginIdentityError"></span>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="password-input-wrapper">
+          <input id="loginPassword" type="password" placeholder="Password" required autocomplete="current-password" />
+          <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">👁</button>
+        </div>
+        <span class="error-message" id="loginPasswordError"></span>
+      </div>
+      <button type="submit" id="loginSubmitBtn">Login</button>
     </form>
     <p class="muted">Belum punya akun? <a href="register.html">Registrasi</a></p>
+    <p class="muted" id="loginStatus"></p>
   </div>
   <script src="auth.js"></script>
 </body>

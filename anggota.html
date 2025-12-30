@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anggota - Kabinet Rahman 25</title>
+  <title>Anggota - Dashboard HIMAKOM ULM</title>
   <link rel="stylesheet" href="style.css" />
   <script src="auth.js"></script>
 </head>
@@ -20,10 +20,15 @@
       />
       <div class="brand-text">
         <h2>Rahman 25</h2>
-        <span>HMJ Ilmu Komputer ULM</span>
+        <span>HIMAKOM ULM</span>
       </div>
     </div>
-    <p class="tagline">Kelola data anggota Kabinet Rahman 25</p>
+    <div class="logo-row">
+      <img src="Logo Kabinet.jpg" alt="Logo Kabinet" class="logo-small main-logo" />
+      <img src="logo-himakom.jpg" alt="Logo HIMAKOM" class="logo-small" />
+      <img src="logo-ulm.png" alt="Logo ULM" class="logo-small" />
+    </div>
+    <p class="tagline">Dashboard Himpunan Mahasiswa Ilmu Komputer Universitas Lambung Mangkurat</p>
     <nav class="nav">
       <a class="nav-link" href="index.html">Dashboard</a>
       <a class="nav-link active" href="anggota.html">Anggota</a>
@@ -65,8 +70,8 @@
 
 <script>
   const seedAnggota = [
-    { nama: "Muhammad Nur Rahman", nim: "21415000", divisi: "BPH", peran: "Ketua Umum", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
-    { nama: "Siti Aulia", nim: "21415016", divisi: "BPH", peran: "Wakil Ketua Umum", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
+      { nama: "Muhammad Nur Rahman", nim: "21415000", divisi: "", peran: "Ketua Umum", foto: "ProfileRahman.jpeg" },
+    { nama: "Siti Aulia", nim: "21415016", divisi: "", peran: "Wakil Ketua Umum", foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60" },
     { nama: "Alya Pratiwi", nim: "21415001", divisi: "Humas", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=60" },
     { nama: "Rizal Nugraha", nim: "21415007", divisi: "Humas", peran: "Wakil Divisi", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=60" },
     { nama: "Bagas Dirgantara", nim: "21415002", divisi: "PSDM", peran: "Ketua Divisi", foto: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=60" },
@@ -108,7 +113,7 @@
               <h4>${a.nama}</h4>
               <p class="muted">${a.peran || "Anggota"}</p>
             </div>
-            <span class="badge">${a.divisi}</span>
+            ${a.divisi ? `<span class="badge">${a.divisi}</span>` : ""}
           </div>
           <p class="muted">NIM: ${a.nim}</p>
           ${isLeader ? `<div class="leader-tag">${a.peran}</div>` : ""}
@@ -123,7 +128,7 @@
           <div class="leader-body">
             <div class="leader-role">${a.peran}</div>
             <h4>${a.nama}</h4>
-            <p class="muted">${a.divisi} · NIM ${a.nim}</p>
+            <p class="muted">${a.divisi ? `${a.divisi} · ` : ""}NIM ${a.nim}</p>
           </div>
         `;
         leadersContainer.appendChild(lc);
@@ -137,4 +142,5 @@
 
 </body>
 </html>
+
 

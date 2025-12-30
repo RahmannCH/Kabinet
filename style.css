@@ -64,6 +64,42 @@ a {
   color: #9cb3c9;
 }
 
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-small {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+  padding: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+  flex-shrink: 0;
+}
+
+.logo-small:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 255, 224, 0.3);
+}
+
+.logo-small.main-logo {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--primary-strong);
+  box-shadow: 0 0 20px rgba(0, 255, 224, 0.4);
+  background: rgba(0, 255, 224, 0.1);
+}
+
 .tagline {
   margin: 6px 0 20px;
   color: #a8bed7;
@@ -352,6 +388,20 @@ button:hover {
   box-shadow: 0 10px 30px rgba(255, 199, 94, 0.15);
 }
 
+.leader-card .card-body {
+  text-align: center;
+}
+
+.leader-card .card-top {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.leader-card .card-actions {
+  justify-content: center;
+}
+
 .leader-tag {
   display: inline-block;
   background: linear-gradient(90deg, #ffd76f, #ff9b3f);
@@ -391,6 +441,7 @@ button:hover {
 
 .leader-body {
   margin-top: 10px;
+  text-align: center;
 }
 
 .leader-role {
@@ -429,6 +480,88 @@ button:hover {
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.06);
   color: #e9f2ff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: var(--primary-strong);
+  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.1);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #9cb3c9;
+  font-weight: 500;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 45px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #9cb3c9;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 18px;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: var(--primary-strong);
+}
+
+.error-message {
+  display: block;
+  color: #ff9f9f;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.password-strength {
+  margin-top: 8px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.password-strength-bar {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: 2px;
+}
+
+.password-strength.weak .password-strength-bar {
+  width: 33%;
+  background: #ff6b6b;
+}
+
+.password-strength.medium .password-strength-bar {
+  width: 66%;
+  background: #ffd93d;
+}
+
+.password-strength.strong .password-strength-bar {
+  width: 100%;
+  background: #6bcf7f;
 }
 
 .auth-card button {
