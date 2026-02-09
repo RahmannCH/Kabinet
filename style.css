@@ -501,31 +501,6 @@ button:hover {
   font-weight: 500;
 }
 
-.password-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-input-wrapper input {
-  padding-right: 45px;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  background: transparent;
-  border: none;
-  color: #9cb3c9;
-  cursor: pointer;
-  padding: 4px 8px;
-  font-size: 18px;
-  transition: color 0.2s ease;
-}
-
-.password-toggle:hover {
-  color: var(--primary-strong);
-}
 
 .error-message {
   display: block;

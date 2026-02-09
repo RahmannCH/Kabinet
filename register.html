@@ -23,19 +23,13 @@
       </div>
       <div class="form-group">
         <label for="regPassword">Password</label>
-        <div class="password-input-wrapper">
-          <input id="regPassword" type="password" placeholder="Password (min. 8 karakter)" required autocomplete="new-password" />
-          <button type="button" class="password-toggle" onclick="togglePassword('regPassword')">👁</button>
-        </div>
+        <input id="regPassword" type="password" placeholder="Password (min. 8 karakter)" required autocomplete="new-password" />
         <div class="password-strength" id="passwordStrength"></div>
         <span class="error-message" id="regPasswordError"></span>
       </div>
       <div class="form-group">
         <label for="regPasswordConfirm">Konfirmasi Password</label>
-        <div class="password-input-wrapper">
-          <input id="regPasswordConfirm" type="password" placeholder="Konfirmasi Password" required autocomplete="new-password" />
-          <button type="button" class="password-toggle" onclick="togglePassword('regPasswordConfirm')">👁</button>
-        </div>
+        <input id="regPasswordConfirm" type="password" placeholder="Konfirmasi Password" required autocomplete="new-password" />
         <span class="error-message" id="regPasswordConfirmError"></span>
       </div>
       <button type="submit" id="registerSubmitBtn">Buat Akun</button>
